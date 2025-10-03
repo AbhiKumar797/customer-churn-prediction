@@ -59,7 +59,7 @@ Each model was tested using **accuracy score, confusion matrix, and classificati
 ├── Customer_Churn_Prediction_using_ML.ipynb   # Jupyter Notebook with full workflow
 ├── WA_Fn-UseC_-Telco-Customer-Churn.csv       # Dataset
 ├── README.md                                  # Project documentation
-└── models/                                    # (Optional) Saved trained models
+
 ```
 
 ---
@@ -90,12 +90,6 @@ Each model was tested using **accuracy score, confusion matrix, and classificati
 * Deploy the model using **Flask/Django API**
 * Build an interactive **dashboard (Streamlit/Plotly Dash)**
 * Hyperparameter tuning for better accuracy
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
