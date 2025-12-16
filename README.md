@@ -10,7 +10,6 @@ Customer churn prediction is a critical business problem. This project:
 - Trains ML models to predict which customers are likely to leave
 - Provides a **Streamlit web application** for easy predictions
 - Exposes a **FastAPI REST API** for integration with other systems
-- Generates insights for **Power BI dashboards**
 
 ---
 
@@ -19,8 +18,7 @@ Customer churn prediction is a critical business problem. This project:
 ```
 customer-churn-prediction/
 ├── data/
-│   ├── WA_Fn-UseC_-Telco-Customer-Churn.csv   # Raw dataset
-│   └── churn_predictions.csv                   # Predictions for Power BI
+│   └── WA_Fn-UseC_-Telco-Customer-Churn.csv   # Raw dataset
 ├── models/
 │   └── churn_model.pkl                         # Trained model
 ├── src/
@@ -52,9 +50,6 @@ customer-churn-prediction/
 - `/predict/batch` - Batch predictions
 - Auto-generated API documentation at `/docs`
 
-### ✅ Business Intelligence Ready
-- Generates `churn_predictions.csv` for Power BI / Tableau dashboards
-
 ---
 
 ## 🛠️ Technologies Used
@@ -67,7 +62,6 @@ customer-churn-prediction/
 | **Visualization** | matplotlib, seaborn |
 | **Web App** | Streamlit |
 | **API** | FastAPI, Uvicorn, Pydantic |
-| **Dashboard** | Power BI |
 
 ---
 
@@ -145,21 +139,7 @@ curl -X POST "http://localhost:8000/predict" \
 
 ---
 
-## 📈 Power BI Dashboard
-
-The `data/churn_predictions.csv` file contains:
-- All customer data
-- `Prediction` column (Yes/No)
-- `Churn_Probability` column (0-1)
-
-**Suggested Visualizations:**
-- Donut chart: Churn vs No Churn
-- Bar chart: Churn by Contract Type
-- KPI Cards: Total Customers, Churn Rate, Revenue at Risk
-
----
-
-## 🔑 Key Learnings
+## � Key Learnings
 
 1. **Data Leakage Prevention:** SMOTE is applied only to training data, not the entire dataset
 2. **Proper Encoding:** One-Hot Encoding for nominal variables instead of Label Encoding
@@ -177,4 +157,4 @@ The `data/churn_predictions.csv` file contains:
 
 ---
 
-👨‍💻 Developed by **Abhishek Kumar**
+👨‍💻 Developed by **Kapil**
