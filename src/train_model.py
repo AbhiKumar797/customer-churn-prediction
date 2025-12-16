@@ -14,7 +14,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_PATH = os.path.join(BASE_DIR, 'data', 'WA_Fn-UseC_-Telco-Customer-Churn.csv')
 MODEL_PATH = os.path.join(BASE_DIR, 'models', 'churn_model.pkl')
-PREDICTIONS_PATH = os.path.join(BASE_DIR, 'data', 'churn_predictions.csv')
 
 def load_data(path):
     df = pd.read_csv(path)
@@ -82,23 +81,6 @@ def train_model():
     print(f"Saving model to {MODEL_PATH}...")
     with open(MODEL_PATH, 'wb') as f:
         pickle.dump(pipeline, f)
-        
-    # Generate predictions for the whole dataset for Power BI
-    print("Generating predictions for Power BI...")
-    df_full = load_data(DATA_PATH) # Reload to keep original structure
-    X_full = df_full.drop(columns=['Churn'])
-    
-    # Predict
-    df_full['Prediction'] = pipeline.predict(X_full)
-    df_full['Prediction'] = df_full['Prediction'].map({1: 'Yes', 0: 'No'})
-    
-    # Get probabilities
-    probs = pipeline.predict_proba(X_full)[:, 1]
-    df_full['Churn_Probability'] = probs
-    
-    # Save to CSV
-    print(f"Saving predictions to {PREDICTIONS_PATH}...")
-    df_full.to_csv(PREDICTIONS_PATH, index=False)
     
     print("Done!")
 
