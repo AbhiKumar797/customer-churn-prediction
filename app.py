@@ -7,8 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
-from imblearn.over_sampling import SMOTE
-from imblearn.pipeline import Pipeline as ImbPipeline
+from sklearn.pipeline import Pipeline
 
 # Set page configuration
 st.set_page_config(
@@ -245,10 +244,10 @@ def train_model_on_fly(base_dir, model_path):
         ]
     )
     
-    pipeline = ImbPipeline(steps=[
+    # Use class_weight='balanced' to handle class imbalance (instead of SMOTE)
+    pipeline = Pipeline(steps=[
         ('preprocessor', preprocessor),
-        ('smote', SMOTE(random_state=42)),
-        ('classifier', RandomForestClassifier(random_state=42, n_estimators=100))
+        ('classifier', RandomForestClassifier(random_state=42, n_estimators=100, class_weight='balanced'))
     ])
     
     pipeline.fit(X_train, y_train)
