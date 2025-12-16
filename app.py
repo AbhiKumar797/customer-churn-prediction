@@ -1,7 +1,14 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import pickle
 import os
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestClassifier
+from imblearn.over_sampling import SMOTE
+from imblearn.pipeline import Pipeline as ImbPipeline
 
 # Set page configuration
 st.set_page_config(
@@ -187,10 +194,70 @@ st.markdown("""
 # Load the trained model
 @st.cache_resource
 def load_model():
-    model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'models', 'churn_model.pkl')
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(base_dir, 'models', 'churn_model.pkl')
+    
+    # Check if model exists, if not train it
+    if not os.path.exists(model_path):
+        train_model_on_fly(base_dir, model_path)
+    
     with open(model_path, 'rb') as f:
         model = pickle.load(f)
     return model
+
+def train_model_on_fly(base_dir, model_path):
+    """Train model on-the-fly if pickle doesn't exist (for Streamlit Cloud deployment)"""
+    # Try multiple data paths
+    data_paths = [
+        os.path.join(base_dir, 'data', 'WA_Fn-UseC_-Telco-Customer-Churn.csv'),
+        os.path.join(base_dir, 'WA_Fn-UseC_-Telco-Customer-Churn.csv'),
+    ]
+    
+    df = None
+    for path in data_paths:
+        if os.path.exists(path):
+            df = pd.read_csv(path)
+            break
+    
+    if df is None:
+        st.error("Data file not found!")
+        st.stop()
+    
+    # Preprocess
+    df = df.drop(columns=['customerID'])
+    df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+    df = df.dropna(subset=['TotalCharges'])
+    
+    X = df.drop(columns=['Churn'])
+    y = df['Churn'].map({'Yes': 1, 'No': 0})
+    
+    numeric_features = ['tenure', 'MonthlyCharges', 'TotalCharges']
+    categorical_features = [col for col in X.columns if col not in numeric_features]
+    
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
+    
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', StandardScaler(), numeric_features),
+            ('cat', OneHotEncoder(handle_unknown='ignore', drop='first'), categorical_features)
+        ]
+    )
+    
+    pipeline = ImbPipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('smote', SMOTE(random_state=42)),
+        ('classifier', RandomForestClassifier(random_state=42, n_estimators=100))
+    ])
+    
+    pipeline.fit(X_train, y_train)
+    
+    # Create models directory if it doesn't exist
+    os.makedirs(os.path.dirname(model_path), exist_ok=True)
+    
+    with open(model_path, 'wb') as f:
+        pickle.dump(pipeline, f)
 
 model = load_model()
 
