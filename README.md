@@ -168,9 +168,4 @@ curl -X POST "http://localhost:8000/predict" \
 ## 👨‍💻 Author
 
 **Abhishek**
-
-[![YouTube](https://img.shields.io/badge/YouTube-Project%20Demo-red?style=flat-square&logo=youtube)](https://www.youtube.com/watch?v=Yd_SA581lSI)
-
----
-
 ⭐ If you found this project helpful, please give it a star!
