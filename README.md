@@ -13,6 +13,14 @@ Customer churn prediction is a critical business problem. This project:
 
 ---
 
+## 🎬 Project Demo
+
+[![Customer Churn Prediction Demo](https://img.youtube.com/vi/Yd_SA581lSI/maxresdefault.jpg)](https://www.youtube.com/watch?v=Yd_SA581lSI)
+
+▶️ **[Watch Full Project Walkthrough on YouTube](https://www.youtube.com/watch?v=Yd_SA581lSI)**
+
+---
+
 ## 🏗️ Project Structure
 
 ```
@@ -139,7 +147,7 @@ curl -X POST "http://localhost:8000/predict" \
 
 ---
 
-## � Key Learnings
+## 📚 Key Learnings
 
 1. **Data Leakage Prevention:** SMOTE is applied only to training data, not the entire dataset
 2. **Proper Encoding:** One-Hot Encoding for nominal variables instead of Label Encoding
@@ -157,4 +165,12 @@ curl -X POST "http://localhost:8000/predict" \
 
 ---
 
-👨‍💻 Developed by **Kapil**
+## 👨‍💻 Author
+
+**Abhishek**
+
+[![YouTube](https://img.shields.io/badge/YouTube-Project%20Demo-red?style=flat-square&logo=youtube)](https://www.youtube.com/watch?v=Yd_SA581lSI)
+
+---
+
+⭐ If you found this project helpful, please give it a star!
