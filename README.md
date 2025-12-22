@@ -19,6 +19,14 @@ Customer churn prediction is a critical business problem. This project:
 
 ▶️ **[Watch Full Project Walkthrough on YouTube](https://www.youtube.com/watch?v=Yd_SA581lSI)**
 
+
+## 🚀 Live Demo
+
+👉 **[View Live Streamlit App](https://customer-churn-prediction-dyqr2pkzpvruz4f2ethjrg.streamlit.app/)**
+
+> Deployed end-to-end ML application for real-time customer churn prediction using Streamlit.
+
+
 ---
 
 ## 🏗️ Project Structure
